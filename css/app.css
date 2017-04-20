@@ -1,0 +1,440 @@
+@font-face {
+    font-family: "Sans Pro Light";
+    src: url(../fonts/SourceSansPro-Light.otf) format('opentype');
+}
+@font-face {
+    font-family: "Sans Pro";
+    src: url(../fonts/SourceSansPro-Regular.otf) format('opentype');
+}
+@font-face {
+    font-family: "Sans Pro Semibold";
+    src: url(../fonts/SourceSansPro-Semibold.otf) format('opentype');
+}
+@font-face {
+    font-family: "Sans Pro Bold";
+    src: url(../fonts/SourceSansPro-Bold.otf) format('opentype');
+}
+
+.km-nova {
+    font-family: "Sans Pro";
+    /*font-family: "Avenir-Book";*/
+    /*font-size: 16px;*/
+}
+
+#kendoUiMobileApp {
+    /*background-color: #f5f5f5;*/
+    
+    /*background: url('../images/logo/tanistir_sayfasi_icon_s.png') no-repeat center;
+    background-size: contain;*/
+}
+
+.km-nova .km-content {
+    /*background-color: #f5f5f5;*/
+}
+.km-nova .km-content,
+.km-nova p {
+    color: #4C5B5C;
+}
+
+.km-nova .km-navbar {
+    background-image: none;
+    background-color: #3b3b3b;/*#00a1d9;*/
+}
+.km-nova .km-header div.km-navbar {
+    border-bottom: 0.4vw solid #0a0a0a;/*#006f96;*/
+}
+.km-nova .km-view-title {
+    font-size: 40px;
+    letter-spacing: 2px;
+    line-height: 100px;
+    font-family: 'Sans Pro Bold';
+    background-image: url(../gfx/header-footer-bg.png);
+}
+
+.km-nova .km-footer.btn-footer {
+    padding: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+/*.km-nova .km-footer:not(.process-btn) {
+    background-image: none;
+    background-color: #00a1d9;
+    border-top: 1px solid #dcdcdc;
+    box-shadow: 1px 0 0 1px rgba(0, 0, 0, 0.35);
+}*/
+.km-nova .km-footer.seamless {
+    padding: 0;
+    background-color: #f5f5f5;
+    border: none;
+    box-shadow: none;
+}
+.km-nova .km-footer.seamless > div {
+    margin: 1em 0 1.3em 0;
+}
+/*.km-nova .km-shim {
+    background: rgba(0,0,0,1);
+}*/
+
+/******************************/
+/*** drawer styles ***/
+/******************************/
+.km-nova .km-drawer,
+.km-nova [data-role=drawer] {
+    width: 300px;
+}
+.km-nova .km-drawer .km-scroll-container {/* forces drawer content not to be vertically centered */
+    -webkit-justify-content: initial;
+    justify-content: initial;
+}
+.km-nova .km-drawer .km-content {/*adjust the height of the drawer list */
+    background-color: #fff;
+    height: 100%;
+}
+.km-nova .km-drawer .km-content img {/* logo image area */
+    max-width: 180px;
+    min-width: 180px;
+    max-height: 125px;
+    min-height: 125px;
+    display: block;
+    float: none;
+    margin: 1em auto;
+}
+.km-nova .km-drawer .km-list>li {/* border color */
+    border-color: #dfe1e2;
+}
+/*.km-nova .km-drawer .km-list>li .km-icon,*/ /* works if the icon is of kendo */
+.km-nova .km-drawer .km-list>li>.km-listview-link {/* text color of an unselected menu item */
+    color: #32364c;
+}
+
+/* menu icons */
+/* hides the arrow (cehvron) */
+#navigation-container a:after {
+    display: none !important;
+}
+#navigation-container .active {/* text color of a selected menu item */
+    color: #32364c;
+}
+.km-nova .km-drawer .km-list>li .km-icon {/* color of the kendo icon */
+    color: #32364c;
+}
+.km-nova .km-drawer .km-listview li.km-state-active {/* selected menu item's bg color */
+    background-color: #f8fafb;
+}
+.km-nova .km-drawer .km-listview li.km-state-active:before {/* slim piece of the left border */
+    background-color: #0072a7;
+}
+#navigation-container li {/* thickness of the menu items */
+    padding-top: 14px;
+    padding-bottom: 14px;
+    font-size: 30px;
+}
+
+
+/********************************/
+/*** Page Elements ***/
+/********************************/
+.splash {
+    background: #3b3b3b url(../gfx/splash.png) no-repeat center;
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+}
+.page-header {
+    font-size: 30px;
+    font-family: Sans Pro Bold;
+    height: 100px;
+
+    border-style: solid;
+    border-width: 0;
+    border-bottom-width: 1px;
+    border-color: #dfe1e2;
+}
+.km-nova .km-group-title {
+    font-size: 30px;
+    padding: 20px 30px 20px 30px;
+    color: #32364c;
+}
+
+
+/********************************/
+/*** Listview ***/
+/********************************/
+.km-nova .km-list>li {
+    border-color: #dfe1e2;/* listview border color (applies to form elements also) */
+    padding-left: 30px;
+}
+.km-nova .km-list>li label {/* form input label */
+    color: #4C5B5C;
+}
+.km-nova .km-list>li>.km-listview-link {/* listview item link */
+    color: #32364c;
+}
+.km-nova .km-list input[type=radio] {
+    left: 0;
+}
+
+
+/********************************/
+/*** form styles ***/
+/********************************/
+.km-nova .km-label-above {
+    /*defines the height of the entire input box*/
+    font-family: "Sans Pro Semibold";
+    font-size: 30px;/*23px*/
+    /*padding-left: 30px;*/
+    padding-bottom: 85px;
+    margin-top: -20px;
+    padding-top: 20px;
+    margin-bottom: -30px;/*45px*/
+}
+.km-nova .km-list input[type=text]:not(.k-input),
+.km-nova .km-list input[type=password],
+.km-nova .km-list input[type=tel] {
+    margin-top: -6px;
+    font-size: 30px;
+}
+
+/* text input */
+input {
+    color: #32364c;
+    font-family: "Sans Pro";
+}
+input:disabled,
+select:disabled,
+textarea:disabled
+ {/* cancels out OS forced styling on disabled input elements */
+    -webkit-text-fill-color: #32364c;/* update -webkit-input-placeholder if changed */
+    -webkit-opacity: 1;
+}
+.km-nova .km-list .km-label-above input[type=text]:not(.k-input),
+.km-nova .km-list .km-label-above input[type=password],
+.km-nova .km-list .km-label-above input[type=tel] {
+    left: 0;
+    padding-left: 40px;
+}
+/* placeholder */
+::-webkit-input-placeholder {/* update -webkit-text-fill-color if changed */
+    color: #878787 !important;
+    font-family: "Sans Pro Light" !important;
+    font-size: 30px !important;
+}
+/* select */
+select {
+    color: #32364c;
+    margin-top: -2px !important;
+    left: 18px !important;
+}
+select.placeholder-item {
+    font-family: "Sans Pro Light" !important;
+    font-size: 15px !important;
+}
+select.real-item {
+    font-family: 'Sans Pro' !important;
+    font-size: 20px !important;
+}
+textarea {
+    color: #32364c;
+    width: 100% !important;
+    height: 130px;
+    top: 0 !important;
+    left: 0 !important;
+    margin: 0 !important;
+    padding: 3px 0 0 13px !important;
+    font-family: "Sans Pro" !important;
+    font-size: 30px !important;
+    line-height: normal;
+}
+.km-nova .km-list input[type=checkbox],
+.km-nova .km-list input[type=radio] {
+    left: 0;
+    right: auto;
+    margin-left: 23px;
+}
+/*.km-nova .km-list .km-icon {
+
+}*/
+.km-nova input[type=checkbox].km-check:after,
+.km-nova input[type=radio].km-check:checked:after {
+    background: #0072a7;
+}
+.questionListviewItem.km-listview-label {
+    font-size: 30px;
+    color: #32364c;
+}
+.questionListviewItem {
+    padding: 20px 15px 20px 70px !important;
+}
+/* links */
+/*.inline-link {
+    text-decoration: underline;
+    color: #32364c;
+}
+.inline-link:active {
+    color: #6acff6;
+}*/
+
+
+/******************************/
+/*kendo buttons*/
+/******************************/
+.km-nova .km-button {
+    width: 100%;
+    margin: 0;
+    padding: 0 !important;
+    border: none;
+    border-radius: 0 !important;
+    /*background: #3b3b3b !important;*/
+    color: #ffffff !important;
+    height: 100px !important;
+    line-height: inherit;
+
+    font-size: 40px;
+    font-family: 'Sans Pro Bold';
+    letter-spacing: 2px;
+
+    /*vert. and horiz. center text*/
+    display:flex !important;
+    justify-content:center !important;
+    align-items:center !important;
+}
+.km-nova .km-button.km-state-active {
+    /*background-color: #878787 !important;*/
+}
+.km-nova .km-button.process-btn,
+.km-nova .km-button.submit-btn,
+.km-nova .km-button.process-btn.km-state-active,
+.km-nova .km-button.submit-btn.km-state-active {
+    background-image: url(../gfx/../gfx/header-footer-bg.png);
+}
+
+
+/******************************/
+/*badge*/
+/******************************/
+.km-nova .km-badge {
+    background: #f01140;
+    border-color: #f01140;
+    color: #fff;
+}
+.custom-badge {
+    top: initial !important;
+    right: initial !important;
+    min-width: unset !important;
+    padding: 0 !important;
+    font-size: 24px !important;
+    font-family: Sans Pro Bold !important;
+    width: 30px !important;
+    height: 30px !important;
+    line-height: 30px !important;
+    border-radius: 20px !important;
+}
+.inline-badge {
+    margin: 3px 0 0 10px !important;
+}
+
+
+/******************************/
+/*** images ***/
+/******************************/
+.water-marked-div {
+    border-right: 1em solid #fff;
+    border-left: 1em solid #fff;
+    background: url('../images/logo/tanistir_sayfasi_icon_s.png') no-repeat center;
+    background-size: contain;
+}
+.water-marked-div-noborder {
+    background: url('../images/logo/tanistir_sayfasi_icon_s.png') no-repeat center;
+    background-size: contain;
+}
+.drawer-logo-div {
+    background: url('../gfx/logo-new.jpg') no-repeat center;
+    background-size: contain;
+    margin: 37.5px auto;
+    min-width: 215px;
+    min-height: 50px;
+    max-width: 215px;
+    max-height: 50px;
+}
+.title-div {
+    /*vert. and horiz. centers text*/
+    height: 100px;
+    padding-left: 30px !important;
+    display:flex;
+    /*justify-content:center;*/
+    align-items:center;
+    float: left;
+}
+.logo-div {
+    position: absolute;
+    right: 30px;
+    background: url('../gfx/logo-new.jpg') no-repeat right;
+    background-size: 200px;
+    width: 200px;
+    margin: 20px 0;
+    height: 60px; /* aspect ratio of image : 800 / 186 = 4.3 */
+    padding: 0;
+}
+.done-check-div {
+    background: url('../gfx/check-icon.png') no-repeat center;
+    background-size: contain;
+    margin: auto;
+    min-width: 100%;
+    min-height: 128px;
+    max-width: 100%;
+    max-height: 128px;
+}
+
+
+/********************************/
+/*** text styles ***/
+/********************************/
+strong, b {
+    font-weight: normal;
+    font-family: 'Sans Pro Semibold';
+}
+
+
+/************************/
+/*****jQuery Confirm*****/
+/************************/
+.jconfirm .jconfirm-box {
+    padding: 30px 30px 15px 30px !important
+}
+.jconfirm .jconfirm-box div.jconfirm-title-c {
+    font-size: 40px !important;
+}
+.jconfirm-content-pane {
+    font-size: 40px;
+}
+.jconfirm.jconfirm-light .jconfirm-box .jconfirm-buttons button {
+    font-size: 40px !important;
+    font-family: 'Sans Pro';
+    margin-left: 20px;
+}
+
+
+/************************/
+/******jQuery Toast******/
+/************************/
+.jq-toast-wrap {
+    width: 500px !important;
+}
+.jq-toast-single h2 {
+    font-family: 'Sans Pro' !important;
+    font-size: 20px !important;
+}
+.jq-toast-single {
+    padding: 30px !important;
+    /*border-radius: 0 !important;*/
+    font-size: 30px !important;
+    line-height: 35px !important;
+    background-color: #0072a7 !important;
+    font-family: 'Sans Pro' !important;
+    letter-spacing: 1px !important;
+}
+.jq-has-icon {
+    background-position: 20px !important;
+}

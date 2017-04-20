@@ -1,0 +1,118 @@
+CACHE MANIFEST
+# v2.9
+
+CACHE:
+index.html
+make-pdf.html
+
+kendo/js/jquery-3.2.0.min.js
+kendo/js/kendo.mobile.min.js
+kendo/js/kendoExtends.js
+
+kendo/styles/kendo.mobile.all.min.css
+
+kendo/styles/images/back.png
+kendo/styles/images/kendoui.svg
+kendo/styles/images/kendoui.ttf?v=1.1
+kendo/styles/images/kendoui.woff?v=1.1
+
+js/lib/pouchdb-6.1.2.min.js
+js/lib/pdfmake.min.js
+js/lib/vfs_fonts.js
+js/lib/d3.v3.min.js
+js/lib/jquery-confirm.min.js
+js/lib/jquery.toast.min.js
+
+js/commons.js
+js/validations.js
+js/db.js
+js/storage.js
+js/app.js
+js/ui.js
+js/drawer.js
+js/score_gauge.js
+js/make-pdf.js
+js/cache.js
+
+views/quiz/common.js
+views/quiz/profile.js
+views/quiz/q1.js
+views/quiz/q2.js
+views/quiz/q3.js
+views/quiz/q4.js
+views/quiz/q5.js
+views/quiz/q6.js
+views/quiz/q7.js
+views/quiz/q8.js
+views/quiz/q9.js
+views/quiz/q10.js
+views/quiz/q11.js
+views/quiz/q12.js
+views/quiz/q13.js
+views/quiz/q14.js
+views/quiz/q15.js
+views/quiz/result.js
+views/quiz/welcome.js
+views/quiz/splash.js
+
+views/admin/loginSync.js
+views/admin/loginExport.js
+views/admin/export.js
+views/admin/sync.js
+
+css/app.css
+css/gauge.css
+css/ios/icons.css
+css/libs/jquery-confirm.min.css
+css/libs/bootstrap/bootstrap.css
+css/libs/jquery-confirm.min.css
+css/libs/jquery.toast.min.css
+
+gfx/check-icon.png
+gfx/download.png
+gfx/logo-new.jpg
+gfx/upload.png
+gfx/header-footer-bg.png
+gfx/splash.png
+
+sounds/correct.mp3
+sounds/wrong.mp3
+
+fonts/SourceSansPro-Bold.otf
+fonts/SourceSansPro-ExtraLight.otf
+fonts/SourceSansPro-Light.otf
+fonts/SourceSansPro-Regular.otf
+fonts/SourceSansPro-Semibold.otf
+
+# This is the default section for entries. 
+# Files listed under this header (or immediately after the CACHE MANIFEST) will be explicitly 
+# cached after they're downloaded for the first time.
+# The HTML file that references your manifest file is automatically cached. 
+# There's no need to include it in your manifest, however it is encouraged to do so.
+
+
+NETWORK:
+*
+http://*
+
+# Files listed in this section may come from the network if they aren't in the cache, 
+# otherwise the network isn't used, even if the user is online. 
+# You can white-list specific URLs here, or simply "*", which allows all URLs. Most sites need "*".
+# These resources require online connection and will never be cached
+# used to tell the browser explicitly which resources are only available while online.
+# essentially a whitelist of online-only assets.
+
+
+FALLBACK:
+# An optional section specifying fallback pages if a resource is inaccessible.
+# It contains two values per line, separated by a space.
+# It caches the resource on the right for offline use, so this should be an explicit path.
+# We’re telling the browser that when an offline user requests a URI matching 
+# “/status.html”, it should instead serve the cached file “offline.html”.
+
+
+# Updating the cache
+# Once an application is offline it remains cached until one of the following happens:
+# 1. The user clears their browser's data storage for your site.
+# 2. The manifest file is modified. Note: updating a file listed in the manifest doesn't 
+#    mean the browser will re-cache that resource. The manifest file itself must be altered.

@@ -1,0 +1,1438 @@
+﻿<!DOCTYPE html>
+<html lang="en" manifest="offline-manifest.appcache">
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+
+    <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" />
+    <link href="css/ios/icons.css" rel="stylesheet" />
+    <link href="css/libs/bootstrap/bootstrap.css" rel="stylesheet" />
+    <link href="css/libs/jquery-confirm.min.css" rel="stylesheet" />
+    <link href="css/libs/jquery.toast.min.css" rel="stylesheet" />
+    <link href="css/gauge.css" rel="stylesheet" />
+
+    <script src="kendo/js/jquery-3.2.0.min.js"></script>
+    <script src="kendo/js/kendo.mobile.min.js"></script>
+    <script src="kendo/js/kendoExtends.js"></script>
+    <script src="js/lib/pouchdb-6.1.2.min.js"></script>
+    <script src="js/lib/pdfmake.min.js"></script>
+    <script src="js/lib/vfs_fonts.js"></script>
+    <script src="js/lib/d3.v3.min.js"></script>
+    <script src="js/lib/jquery-confirm.min.js"></script>
+    <script src="js/lib/jquery.toast.min.js"></script>
+
+    <script src="js/commons.js"></script>
+    <script src="js/cache.js"></script>
+    <script src="js/validations.js"></script>
+    <script src="js/db.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/drawer.js"></script>
+    <script src="js/score_gauge.js"></script>
+</head>
+<body id="kendoUiMobileApp">
+
+    <script src="views/quiz/common.js"></script>
+    <script src="views/quiz/splash.js"></script>
+    <script src="views/quiz/welcome.js"></script>
+    <script src="views/quiz/q1.js"></script>
+    <script src="views/quiz/q2.js"></script>
+    <script src="views/quiz/q3.js"></script>
+    <script src="views/quiz/q4.js"></script>
+    <script src="views/quiz/q5.js"></script>
+    <script src="views/quiz/q6.js"></script>
+    <script src="views/quiz/q7.js"></script>
+    <script src="views/quiz/q8.js"></script>
+    <script src="views/quiz/q9.js"></script>
+    <script src="views/quiz/q10.js"></script>
+    <script src="views/quiz/q11.js"></script>
+    <script src="views/quiz/q12.js"></script>
+    <script src="views/quiz/q13.js"></script>
+    <script src="views/quiz/q14.js"></script>
+    <script src="views/quiz/q15.js"></script>
+    <script src="views/quiz/result.js"></script>
+    <script src="views/quiz/profile.js"></script>
+
+    <script src="views/admin/loginSync.js"></script>
+    <script src="views/admin/loginExport.js"></script>
+    <script src="views/admin/sync.js"></script>
+    <script src="views/admin/export.js"></script>
+
+    <div data-role="layout" data-id="splash">
+        
+    </div>
+
+    <div data-role="layout" data-id="root">
+        <header data-role="header">
+            <div data-role="navbar">
+                <span data-role="view-title"></span>
+                <a data-role="button" data-click="navBarBtnClick" data-actiontype="open-drawer"
+                   data-align="left" data-icon="hamburger"></a>
+                    <!--
+                    <a data-role="button" data-click="navBarBtnClick" data-actiontype="go-to-view"
+                    data-destpage="globals" data-qsparams="" data-align="right" data-icon="more"></a>
+                    -->
+            </div>
+        </header>
+        <!-- application views will be rendered here -->
+    </div>
+
+    <div data-role="layout" data-id="quiz-sub">
+        <header data-role="header">
+            <div data-role="navbar">
+                <span data-role="view-title"></span>
+                <!--<a data-role="backbutton" data-align="left"></a>-->
+                <a data-role="button" data-click="navBarBtnClick" data-actiontype="go-back"
+                   data-align="left" data-icon="back" class="km-header-back-btn"></a>
+                <!--<a data-role="button" data-click="navBarBtnClick" data-actiontype="go-to-view"
+                   data-destpage="globals" data-qsparams="" data-align="right" data-icon="more"></a>-->
+            </div>
+        </header>
+        <!-- application views will be rendered here -->
+    </div>
+
+    <div id="appDrawer"
+         data-role="drawer"
+         data-swipe-to-open="false"
+         data-position="left"
+         data-model="app.drawer"
+         data-bind="events: {
+            beforeShow: onBeforeShow,
+            init: onInit,
+            show: onShow,
+            afterHide: onAfterHide
+        }">
+        <!--<header data-role="header">
+            <div data-role="navbar">
+                <span data-role="view-title"></span>
+            </div>
+        </header>-->
+        <div class="drawer-logo-div"></div>
+        <ul id="navigation-container" data-role="listview">
+            <li><a data-target="welcome" data-qsparams="">Quiz</a></li>
+            <li><a data-target="loginSync" data-qsparams="fwd=sync">Sync</a></li>
+            <li><a data-target="loginExport" data-qsparams="fwd=export">Export</a></li>
+            <!--<li><a data-target="about" data-qsparams="">About</a></li>-->
+        </ul>
+    </div>
+
+    <!--<div data-role="modalview" id="modalview-init-loading" style="width: 50%; display: none">
+        <div>Loading..</div>
+    </div>-->
+
+    <div id="splashView"
+         data-role="view"
+         data-title=""
+         data-use-native-scrolling="false"
+         data-layout="splash"
+         data-model="app.splash"
+         data-bind="events: {
+            beforeShow: onBeforeShow,
+            init: onInit,
+            show: onShow,
+            afterShow: onAfterShow,
+            hide: onHide
+        }">
+        <div class="splash">
+            <div style="position: absolute; bottom: 100px; background-color: transparent; width: 100vw;">
+                <a data-role="button"
+                   data-bind="click: clickStartBtn"
+                   class="start-btn" style="margin: 0 auto; background: none">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;START QUIZ</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="welcomeView"
+        data-role="view"
+        data-title="DCI QUIZ"
+        data-use-native-scrolling="true"
+        data-layout="root"
+        data-model="app.welcome"
+        data-bind="events: {
+            beforeShow: onBeforeShow,
+            init: onInit,
+            show: onShow,
+            afterShow: onAfterShow,
+            hide: onHide
+        }">
+        <div class="page-header">
+            <div style="float: left">
+                <div class="title-div">BEGIN HERE</div>
+                <div class="logo-div"></div>
+            </div>
+        </div>
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>
+                Please complete the form below to get started.
+                <ul>
+                    <li>
+                        <label class="km-label-above"><!--km-required-->
+                            <span>NAME</span>
+                            <span class="km-badge custom-badge inline-badge" data-bind="visible: nameBadgeVisible">!</span>
+                            <input type="text" class="formElement" data-bind="value: name" 
+                                maxlength="50" placeholder="Enter your first and last names here." />
+                        </label>
+                    </li>
+                    <li>
+                        <label class="km-label-above">
+                            <span>E-MAIL</span>
+                            <span class="km-badge custom-badge inline-badge" data-bind="visible: emailBadgeVisible">!</span>
+                            <input type="text" class="formElement" data-bind="value: email" 
+                                maxlength="100" placeholder="Enter your email address." />
+                        </label>
+                    </li>
+                    <li>
+                        <label class="km-label-above">
+                            <span>COMPANY</span>
+                            <span class="km-badge custom-badge inline-badge" data-bind="visible: companyBadgeVisible">!</span>
+                            <input type="text" class="formElement" data-bind="value: company" 
+                                maxlength="100" placeholder="Enter the name of your organization." />
+                        </label>
+                    </li>
+                    <li>
+                        <label class="km-label-above">
+                            <span>PHONE</span>
+                            <span class="km-badge custom-badge inline-badge" data-bind="visible: phoneBadgeVisible">!</span>
+                            <input type="tel" class="formElement" data-bind="value: phone"
+                                   maxlength="10" placeholder="Enter your 10-digit number. (optional)" />
+                        </label>
+                    </li>
+                    <!--
+                    <li>
+                        <label class="km-required km-label-above">
+                            <span data-bind="text: cityTitle"></span>
+                            <span class="km-badge custom-badge form-badge"
+                                    data-bind="visible: cityBadgeVisible, text: cityBadge"></span>
+                            <select id="dd_cities" class="formElement placeholder-item">
+                                <option value="0" selected class="placeholder-item">Bir şehir seçin</option>
+                            </select>
+                        </label>
+                    </li>
+                    -->
+                </ul>
+            </li>
+        </ul>
+        <div data-role="footer" class="btn-footer">
+            <div>
+                <a data-role="button"
+                   data-bind="enabled: isSubmitBtnEnabled, visible: isSubmitBtnVisible"
+                   class="submit-btn">BEGIN</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="q1View"
+        data-role="view"
+        data-title="DCI QUIZ"
+        data-use-native-scrolling="true"
+        data-layout="quiz-sub"
+        data-model="app.q1"
+        data-bind="events: {
+            beforeShow: onBeforeShow,
+            init: onInit,
+            show: onShow,
+            afterShow: onAfterShow,
+            hide: onHide
+        }">
+        <div class="page-header">
+            <div style="float: left">
+                <div class="title-div">QUESTION 1 of 15</div>
+                <div class="logo-div"></div>
+            </div>
+        </div>
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>
+                DCI Bullet Resistant Doors and frames are rated Protection Levels 1 through 8 in accordance with UL 752.
+                <ul>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q1-radio" type="radio" value="a" data-bind="checked: answer" /><!-- checked="checked" -->
+                            Fact
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q1-radio" type="radio" value="b" data-bind="checked: answer" />
+                            Fiction
+                        </label>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div data-role="footer" class="btn-footer">
+            <div>
+                <a data-role="button"
+                   data-bind="enabled: isSubmitBtnEnabled, visible: isSubmitBtnVisible"
+                   class="submit-btn">NEXT QUESTION</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="q2View"
+        data-role="view"
+        data-title="DCI QUIZ"
+        data-use-native-scrolling="true"
+        data-layout="quiz-sub"
+        data-model="app.q2"
+        data-bind="events: {
+            beforeShow: onBeforeShow,
+            init: onInit,
+            show: onShow,
+            afterShow: onAfterShow,
+            hide: onHide
+        }">
+        <div class="page-header">
+            <div style="float: left">
+                <div class="title-div">QUESTION 2 of 15</div>
+                <div class="logo-div"></div>
+            </div>
+        </div>
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>
+                Heavy-gauge standard steel doors can be used as tornado doors in certain applications.
+                <ul>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q2-radio" type="radio" value="a" data-bind="checked: answer" />
+                            Fact
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q2-radio" type="radio" value="b" data-bind="checked: answer" />
+                            Fiction
+                        </label>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div data-role="footer" class="btn-footer">
+            <div>
+                <a data-role="button"
+                   data-bind="enabled: isSubmitBtnEnabled, visible: isSubmitBtnVisible"
+                   class="submit-btn">NEXT QUESTION</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="q3View"
+        data-role="view"
+        data-title="DCI QUIZ"
+        data-use-native-scrolling="true"
+        data-layout="quiz-sub"
+        data-model="app.q3"
+        data-bind="events: {
+            beforeShow: onBeforeShow,
+            init: onInit,
+            show: onShow,
+            afterShow: onAfterShow,
+            hide: onHide
+        }">
+        <div class="page-header">
+            <div style="float: left">
+                <div class="title-div">QUESTION 3 of 15</div>
+                <div class="logo-div"></div>
+            </div>
+        </div>
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>
+                Stainless steel can last up to 75 years and beyond – and is easy to keep clean.
+                <ul>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q3-radio" type="radio" value="a" data-bind="checked: answer" />
+                            Fact
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q3-radio" type="radio" value="b" data-bind="checked: answer" />
+                            Fiction
+                        </label>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div data-role="footer" class="btn-footer">
+            <div>
+                <a data-role="button"
+                   data-bind="enabled: isSubmitBtnEnabled, visible: isSubmitBtnVisible"
+                   class="submit-btn">NEXT QUESTION</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="q4View"
+         data-role="view"
+         data-title="DCI QUIZ"
+         data-use-native-scrolling="true"
+         data-layout="quiz-sub"
+         data-model="app.q4"
+         data-bind="events: {
+            beforeShow: onBeforeShow,
+            init: onInit,
+            show: onShow,
+            afterShow: onAfterShow,
+            hide: onHide
+        }">
+        <div class="page-header">
+            <div style="float: left">
+                <div class="title-div">QUESTION 4 of 15</div>
+                <div class="logo-div"></div>
+            </div>
+        </div>
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>
+                DCI has the only patented sound control door assembly in the hollow metal industry – with a 
+                lightweight design that allows doors to be 1 ¾” standard thickness so that standard hinges can be used.
+                <ul>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q4-radio" type="radio" value="a" data-bind="checked: answer" />
+                            Fact
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q4-radio" type="radio" value="b" data-bind="checked: answer" />
+                            Fiction
+                        </label>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div data-role="footer" class="btn-footer">
+            <div>
+                <a data-role="button"
+                   data-bind="enabled: isSubmitBtnEnabled, visible: isSubmitBtnVisible"
+                   class="submit-btn">NEXT QUESTION</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="q5View"
+         data-role="view"
+         data-title="DCI QUIZ"
+         data-use-native-scrolling="true"
+         data-layout="quiz-sub"
+         data-model="app.q5"
+         data-bind="events: {
+            beforeShow: onBeforeShow,
+            init: onInit,
+            show: onShow,
+            afterShow: onAfterShow,
+            hide: onHide
+        }">
+        <div class="page-header">
+            <div style="float: left">
+                <div class="title-div">QUESTION 5 of 15</div>
+                <div class="logo-div"></div>
+            </div>
+        </div>
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>
+                Hollow metal doors are banned in Federal buildings with blast mitigation requirements.
+                <ul>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q5-radio" type="radio" value="a" data-bind="checked: answer" />
+                            Fact
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q5-radio" type="radio" value="b" data-bind="checked: answer" />
+                            Fiction
+                        </label>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div data-role="footer" class="btn-footer">
+            <div>
+                <a data-role="button"
+                   data-bind="enabled: isSubmitBtnEnabled, visible: isSubmitBtnVisible"
+                   class="submit-btn">NEXT QUESTION</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="q6View"
+         data-role="view"
+         data-title="DCI QUIZ"
+         data-use-native-scrolling="true"
+         data-layout="quiz-sub"
+         data-model="app.q6"
+         data-bind="events: {
+            beforeShow: onBeforeShow,
+            init: onInit,
+            show: onShow,
+            afterShow: onAfterShow,
+            hide: onHide
+        }">
+        <div class="page-header">
+            <div style="float: left">
+                <div class="title-div">QUESTION 6 of 15</div>
+                <div class="logo-div"></div>
+            </div>
+        </div>
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>
+                DCI lead lined radiation doors and frameshave a 3 hour fire rating.
+                <ul>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q6-radio" type="radio" value="a" data-bind="checked: answer" />
+                            Fact
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q6-radio" type="radio" value="b" data-bind="checked: answer" />
+                            Fiction
+                        </label>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div data-role="footer" class="btn-footer">
+            <div>
+                <a data-role="button"
+                   data-bind="enabled: isSubmitBtnEnabled, visible: isSubmitBtnVisible"
+                   class="submit-btn">NEXT QUESTION</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="q7View"
+         data-role="view"
+         data-title="DCI QUIZ"
+         data-use-native-scrolling="true"
+         data-layout="quiz-sub"
+         data-model="app.q7"
+         data-bind="events: {
+            beforeShow: onBeforeShow,
+            init: onInit,
+            show: onShow,
+            afterShow: onAfterShow,
+            hide: onHide
+        }">
+        <div class="page-header">
+            <div style="float: left">
+                <div class="title-div">QUESTION 7 of 15</div>
+                <div class="logo-div"></div>
+            </div>
+        </div>
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>
+                After 10,000,000 opening and closings, there was no deterioration of the DCI Test door; 
+                the hinges were not loose and the door was flat and true – which is 10x the required amount.
+                <ul>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q7-radio" type="radio" value="a" data-bind="checked: answer" />
+                            Fact
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q7-radio" type="radio" value="b" data-bind="checked: answer" />
+                            Fiction
+                        </label>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div data-role="footer" class="btn-footer">
+            <div>
+                <a data-role="button"
+                   data-bind="enabled: isSubmitBtnEnabled, visible: isSubmitBtnVisible"
+                   class="submit-btn">NEXT QUESTION</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="q8View"
+         data-role="view"
+         data-title="DCI QUIZ"
+         data-use-native-scrolling="true"
+         data-layout="quiz-sub"
+         data-model="app.q8"
+         data-bind="events: {
+            beforeShow: onBeforeShow,
+            init: onInit,
+            show: onShow,
+            afterShow: onAfterShow,
+            hide: onHide
+        }">
+        <div class="page-header">
+            <div style="float: left">
+                <div class="title-div">QUESTION 8 of 15</div>
+                <div class="logo-div"></div>
+            </div>
+        </div>
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>
+                A “lean supply chain” is one that produces _____.
+                <ul>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q8-radio" type="radio" value="a" data-bind="checked: answer" />
+                            What is needed
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q8-radio" type="radio" value="b" data-bind="checked: answer" />
+                            How much is needed
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q8-radio" type="radio" value="c" data-bind="checked: answer" />
+                            When it is needed
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q8-radio" type="radio" value="d" data-bind="checked: answer" />
+                            Where it is needed
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q8-radio" type="radio" value="e" data-bind="checked: answer" />
+                            All of the above
+                        </label>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div data-role="footer" class="btn-footer">
+            <div>
+                <a data-role="button"
+                   data-bind="enabled: isSubmitBtnEnabled, visible: isSubmitBtnVisible"
+                   class="submit-btn">NEXT QUESTION</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="q9View"
+         data-role="view"
+         data-title="DCI QUIZ"
+         data-use-native-scrolling="true"
+         data-layout="quiz-sub"
+         data-model="app.q9"
+         data-bind="events: {
+            beforeShow: onBeforeShow,
+            init: onInit,
+            show: onShow,
+            afterShow: onAfterShow,
+            hide: onHide
+        }">
+        <div class="page-header">
+            <div style="float: left">
+                <div class="title-div">QUESTION 9 of 15</div>
+                <div class="logo-div"></div>
+            </div>
+        </div>
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>
+                DCI Bullet Resistant Doors and frames can be fabricated for any manufacturer’s _____.
+                <ul>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q9-radio" type="radio" value="a" data-bind="checked: answer" />
+                            Deadlock prep
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q9-radio" type="radio" value="b" data-bind="checked: answer" />
+                            Exit device
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q9-radio" type="radio" value="c" data-bind="checked: answer" />
+                            Mortise sectional trim
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q9-radio" type="radio" value="d" data-bind="checked: answer" />
+                            Hinge locations
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q9-radio" type="radio" value="e" data-bind="checked: answer" />
+                            All of the above
+                        </label>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div data-role="footer" class="btn-footer">
+            <div>
+                <a data-role="button"
+                   data-bind="enabled: isSubmitBtnEnabled, visible: isSubmitBtnVisible"
+                   class="submit-btn">NEXT QUESTION</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="q10View"
+         data-role="view"
+         data-title="DCI QUIZ"
+         data-use-native-scrolling="true"
+         data-layout="quiz-sub"
+         data-model="app.q10"
+         data-bind="events: {
+            beforeShow: onBeforeShow,
+            init: onInit,
+            show: onShow,
+            afterShow: onAfterShow,
+            hide: onHide
+        }">
+        <div class="page-header">
+            <div style="float: left">
+                <div class="title-div">QUESTION 10 of 15</div>
+                <div class="logo-div"></div>
+            </div>
+        </div>
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>
+                As of 2015, The International Building Code (IBC) requires that new school construction in areas 
+                susceptible to tornadoes with winds of _____ or higher must have storm shelters with tornado 
+                resistant doors.
+                <ul>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q10-radio" type="radio" value="a" data-bind="checked: answer" />
+                            250 mph
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q10-radio" type="radio" value="b" data-bind="checked: answer" />
+                            125 mph
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q10-radio" type="radio" value="c" data-bind="checked: answer" />
+                            75 mph
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q10-radio" type="radio" value="d" data-bind="checked: answer" />
+                            50 mph
+                        </label>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div data-role="footer" class="btn-footer">
+            <div>
+                <a data-role="button"
+                   data-bind="enabled: isSubmitBtnEnabled, visible: isSubmitBtnVisible"
+                   class="submit-btn">NEXT QUESTION</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="q11View"
+         data-role="view"
+         data-title="DCI QUIZ"
+         data-use-native-scrolling="true"
+         data-layout="quiz-sub"
+         data-model="app.q11"
+         data-bind="events: {
+            beforeShow: onBeforeShow,
+            init: onInit,
+            show: onShow,
+            afterShow: onAfterShow,
+            hide: onHide
+        }">
+        <div class="page-header">
+            <div style="float: left">
+                <div class="title-div">QUESTION 11 of 15</div>
+                <div class="logo-div"></div>
+            </div>
+        </div>
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>
+                DCI manufactures stainless steel doors and frames from 100% stainless steel parts to _____.
+                <ul>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q11-radio" type="radio" value="a" data-bind="checked: answer" />
+                            Save a bunch of money
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q11-radio" type="radio" value="b" data-bind="checked: answer" />
+                            Make sure everything is nice and shiny inside
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q11-radio" type="radio" value="c" data-bind="checked: answer" />
+                            Eliminate metal incompatibility – which causes galvanic corrorsion
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q11-radio" type="radio" value="d" data-bind="checked: answer" />
+                            None of the above
+                        </label>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div data-role="footer" class="btn-footer">
+            <div>
+                <a data-role="button"
+                   data-bind="enabled: isSubmitBtnEnabled, visible: isSubmitBtnVisible"
+                   class="submit-btn">NEXT QUESTION</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="q12View"
+         data-role="view"
+         data-title="DCI QUIZ"
+         data-use-native-scrolling="true"
+         data-layout="quiz-sub"
+         data-model="app.q12"
+         data-bind="events: {
+            beforeShow: onBeforeShow,
+            init: onInit,
+            show: onShow,
+            afterShow: onAfterShow,
+            hide: onHide
+        }">
+        <div class="page-header">
+            <div style="float: left">
+                <div class="title-div">QUESTION 12 of 15</div>
+                <div class="logo-div"></div>
+            </div>
+        </div>
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>
+                In addition to absorbing sound, DCI STC doors have baffles that _____ sound by breaking up the 
+                sound waves inside the door, so that much less sound gets through to the other side.
+                <ul>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q12-radio" type="radio" value="a" data-bind="checked: answer" />
+                            Enhance
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q12-radio" type="radio" value="b" data-bind="checked: answer" />
+                            Confuse
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q12-radio" type="radio" value="c" data-bind="checked: answer" />
+                            Muffle
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q12-radio" type="radio" value="d" data-bind="checked: answer" />
+                            Add treble to
+                        </label>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div data-role="footer" class="btn-footer">
+            <div>
+                <a data-role="button"
+                   data-bind="enabled: isSubmitBtnEnabled, visible: isSubmitBtnVisible"
+                   class="submit-btn">NEXT QUESTION</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="q13View"
+         data-role="view"
+         data-title="DCI QUIZ"
+         data-use-native-scrolling="true"
+         data-layout="quiz-sub"
+         data-model="app.q13"
+         data-bind="events: {
+            beforeShow: onBeforeShow,
+            init: onInit,
+            show: onShow,
+            afterShow: onAfterShow,
+            hide: onHide
+        }">
+        <div class="page-header">
+            <div style="float: left">
+                <div class="title-div">QUESTION 13 of 15</div>
+                <div class="logo-div"></div>
+            </div>
+        </div>
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>
+                A Category Type C blast corresponds to the threat from a TNT bomb (typically a car bomb), 
+                weighing _____ pounds and detonated at a distance of _____ feet from the face of the building.
+                <ul>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q13-radio" type="radio" value="a" data-bind="checked: answer" />
+                            100 lbs. and 50 ft.
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q13-radio" type="radio" value="b" data-bind="checked: answer" />
+                            250 lbs. and 75 ft.
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q13-radio" type="radio" value="c" data-bind="checked: answer" />
+                            340lbs. and 160 ft.
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q13-radio" type="radio" value="d" data-bind="checked: answer" />
+                            425 lbs. and 180 ft.
+                        </label>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div data-role="footer" class="btn-footer">
+            <div>
+                <a data-role="button"
+                   data-bind="enabled: isSubmitBtnEnabled, visible: isSubmitBtnVisible"
+                   class="submit-btn">NEXT QUESTION</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="q14View"
+         data-role="view"
+         data-title="DCI QUIZ"
+         data-use-native-scrolling="true"
+         data-layout="quiz-sub"
+         data-model="app.q14"
+         data-bind="events: {
+            beforeShow: onBeforeShow,
+            init: onInit,
+            show: onShow,
+            afterShow: onAfterShow,
+            hide: onHide
+        }">
+        <div class="page-header">
+            <div style="float: left">
+                <div class="title-div">QUESTION 14 of 15</div>
+                <div class="logo-div"></div>
+            </div>
+        </div>
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>
+                Which U.S. specification codes and standards do DCI Lead Lined doors and frames meet?
+                <ul>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q14-radio" type="radio" value="a" data-bind="checked: answer" />
+                            ATSM & ANSI
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q14-radio" type="radio" value="b" data-bind="checked: answer" />
+                            UL
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q14-radio" type="radio" value="c" data-bind="checked: answer" />
+                            LEED
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q14-radio" type="radio" value="d" data-bind="checked: answer" />
+                            A & B Only
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q14-radio" type="radio" value="e" data-bind="checked: answer" />
+                            All of the above
+                        </label>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div data-role="footer" class="btn-footer">
+            <div>
+                <a data-role="button"
+                   data-bind="enabled: isSubmitBtnEnabled, visible: isSubmitBtnVisible"
+                   class="submit-btn">NEXT QUESTION</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="q15View"
+         data-role="view"
+         data-title="DCI QUIZ"
+         data-use-native-scrolling="true"
+         data-layout="quiz-sub"
+         data-model="app.q15"
+         data-bind="events: {
+            beforeShow: onBeforeShow,
+            init: onInit,
+            show: onShow,
+            afterShow: onAfterShow,
+            hide: onHide
+        }">
+        <div class="page-header">
+            <div style="float: left">
+                <div class="title-div">QUESTION 15 of 15</div>
+                <div class="logo-div"></div>
+            </div>
+        </div>
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>
+                Based on the DCI’s record-breaking door opening/closing test results, a DCI hollow metal door could theoretically last _____ years in a typical school environment.
+                <ul>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q15-radio" type="radio" value="a" data-bind="checked: answer" />
+                            50
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q15-radio" type="radio" value="b" data-bind="checked: answer" />
+                            75
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q15-radio" type="radio" value="c" data-bind="checked: answer" />
+                            500
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q15-radio" type="radio" value="d" data-bind="checked: answer" />
+                            100
+                        </label>
+                    </li>
+                    <li>
+                        <label class="questionListviewItem">
+                            <input name="q15-radio" type="radio" value="e" data-bind="checked: answer" />
+                            200
+                        </label>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div data-role="footer" class="btn-footer">
+            <div>
+                <a data-role="button"
+                   data-bind="enabled: isSubmitBtnEnabled, visible: isSubmitBtnVisible"
+                   class="submit-btn">COMPLETE QUIZ</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="resultView"
+        data-role="view"
+        data-title="DCI QUIZ"
+        data-use-native-scrolling="true"
+        data-layout="quiz-sub"
+        data-model="app.result"
+        data-bind="events: {
+            beforeShow: onBeforeShow,
+            init: onInit,
+            show: onShow,
+            afterShow: onAfterShow,
+            hide: onHide
+        }">
+        <div class="page-header">
+            <div style="float: left">
+                <div class="title-div">YOUR RESULTS</div>
+                <div class="logo-div"></div>
+            </div>
+        </div>
+        <div class="km-group-title">
+            <div class="km-text">
+                <span data-bind="text: name" style="font-size: 40px; font-family: 'Sans Pro Light';"></span><br />
+                <span data-bind="text: company" style="font-size: 30px; font-family: 'Sans Pro Light';"></span>
+            </div>
+        </div>
+        <div id="scoreArch" style="margin-top: 30px;"></div>
+        <div class="col-xs-12" style="margin-top: 10px;">
+            <div class="col-xs-4">
+                <div id="correctsDonut" class="card">
+                    <div class="donut limited"></div>
+                    <div class="info">
+                        <div class="entity-icon entity-correct"></div>
+                        <div class="entity-name">Correct</div>
+                        <div class="entity-count" data-bind="text: correctsCount"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div id="wrongsDonut" class="card">
+                    <div class="donut limited"></div>
+                    <div class="info">
+                        <div class="entity-icon entity-incorrect"></div>
+                        <div class="entity-name">Wrong</div>
+                        <div class="entity-count" data-bind="text: wrongsCount"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div id="skippedDonut" class="card">
+                    <div class="donut limited"></div>
+                    <div class="info">
+                        <div class="entity-icon entity-skipped"></div>
+                        <div class="entity-name">Skipped</div>
+                        <div class="entity-count" data-bind="text: skippedCount"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 result-text-div" data-bind="visible: isGoodResultVisible">
+            Congratulations!<br />
+            You have earned a reward from DCI.<br />
+            Tap "Redeem Reward" to continue.
+        </div>
+        <div class="col-xs-12 result-text-div" data-bind="visible: isBadResultVisible">
+            Oh Noooo..<br />
+            We were hoping for a better score.<br />
+            Thank you for your interest.
+        </div>
+        <div data-role="footer" class="btn-footer">
+            <div>
+                <a data-role="button"
+                   data-bind="enabled: isSubmitBtnEnabled, visible: isSubmitBtnVisible, buttonText: btnText"
+                   class="submit-btn"></a>
+            </div>
+        </div>
+    </div>
+
+    <div id="profileView"
+        data-role="view"
+        data-title="DCI QUIZ"
+        data-use-native-scrolling="true"
+        data-layout="quiz-sub"
+        data-model="app.profile"
+        data-bind="events: {
+            beforeShow: onBeforeShow,
+            init: onInit,
+            show: onShow,
+            afterShow: onAfterShow,
+            hide: onHide
+        }">
+        <div class="page-header">
+            <div style="float: left">
+                <div class="title-div">REDEEM REWARD</div>
+                <div class="logo-div"></div>
+            </div>
+        </div>
+        <ul data-role="listview" data-style="inset" data-type="flat">
+            <li>
+                <label class="km-label-above">
+                    <span>NAME</span>
+                    <span class="km-badge custom-badge inline-badge" data-bind="visible: nameBadgeVisible">!</span>
+                    <input type="text" class="formElement" data-bind="value: name" 
+                        maxlength="50" placeholder="Enter your full name here." />
+                </label>
+            </li>
+            <li>
+                <label class="km-label-above">
+                    <span>E-MAIL</span>
+                    <span class="km-badge custom-badge inline-badge" data-bind="visible: emailBadgeVisible">!</span>
+                    <input type="text" class="formElement" data-bind="value: email" 
+                        maxlength="100" placeholder="Enter your email address." />
+                </label>
+            </li>
+            <li>
+                <label class="km-label-above">
+                    <span>COMPANY</span>
+                    <span class="km-badge custom-badge inline-badge" data-bind="visible: companyBadgeVisible">!</span>
+                    <input type="text" class="formElement" data-bind="value: company" 
+                        maxlength="100" placeholder="Enter the name of your organization." />
+                </label>
+            </li>
+            <li>
+                <label class="km-label-above">
+                    <span>PHONE</span>
+                    <span class="km-badge custom-badge inline-badge" data-bind="visible: phoneBadgeVisible">!</span>
+                    <input type="tel" class="formElement" data-bind="value: phone"
+                        maxlength="10" placeholder="Enter your 10-digit number. (optional)" />
+                </label>
+            </li>
+            <li>
+                <label class="km-label-above">
+                    <span>ADDRESS</span>
+                    <span class="km-badge custom-badge inline-badge" data-bind="visible: addressBadgeVisible">!</span>
+                    <input type="text" class="formElement" data-bind="value: address" 
+                        maxlength="200" placeholder="Enter your street address." />
+                </label>
+            </li>
+        </ul>
+        <div data-role="footer" class="btn-footer">
+            <div>
+                <a data-role="button"
+                   data-bind="enabled: isSubmitBtnEnabled, visible: isSubmitBtnVisible"
+                   class="submit-btn">SUBMIT</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="loginSyncView"
+        data-role="view"
+        data-title="DCI QUIZ"
+        data-use-native-scrolling="true"
+        data-layout="root"
+        data-model="app.loginSync"
+        data-bind="events: {
+            beforeShow: onBeforeShow,
+            init: onInit,
+            show: onShow,
+            afterShow: onAfterShow,
+            hide: onHide
+        }">
+        <div class="page-header">
+            <div style="float: left">
+                <div class="title-div">ADMIN LOGIN</div>
+                <div class="logo-div"></div>
+            </div>
+        </div>
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>
+                Please login to use this section of the application.
+                <ul>
+                    <li>
+                        <label class="km-label-above">
+                            <span>Username</span>
+                            <span class="km-badge custom-badge inline-badge" data-bind="visible: userBadgeVisible">!</span>
+                            <input type="text" class="formElement" data-bind="value: user" maxlength="10" />
+                        </label>
+                    </li>
+                    <li>
+                        <label class="km-label-above">
+                            <span>Password</span>
+                            <span class="km-badge custom-badge inline-badge" data-bind="visible: pwdBadgeVisible">!</span>
+                            <input type="password" class="formElement" data-bind="value: pwd" maxlength="10" />
+                        </label>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div data-role="footer" class="btn-footer">
+            <div>
+                <a data-role="button"
+                   data-bind="enabled: isSubmitBtnEnabled, visible: isSubmitBtnVisible"
+                   class="submit-btn">SUBMIT</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="loginExportView"
+        data-role="view"
+        data-title="DCI QUIZ"
+        data-use-native-scrolling="true"
+        data-layout="root"
+        data-model="app.loginExport"
+        data-bind="events: {
+            beforeShow: onBeforeShow,
+            init: onInit,
+            show: onShow,
+            afterShow: onAfterShow,
+            hide: onHide
+        }">
+        <div class="page-header">
+            <div style="float: left">
+                <div class="title-div">ADMIN LOGIN</div>
+                <div class="logo-div"></div>
+            </div>
+        </div>
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>
+                Please login to use this section of the application.
+                <ul>
+                    <li>
+                        <label class="km-label-above">
+                            <span>Username</span>
+                            <span class="km-badge custom-badge inline-badge" data-bind="visible: userBadgeVisible">!</span>
+                            <input type="text" class="formElement" data-bind="value: user" maxlength="10" />
+                        </label>
+                    </li>
+                    <li>
+                        <label class="km-label-above">
+                            <span>Password</span>
+                            <span class="km-badge custom-badge inline-badge" data-bind="visible: pwdBadgeVisible">!</span>
+                            <input type="password" class="formElement" data-bind="value: pwd" maxlength="10" />
+                        </label>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div data-role="footer" class="btn-footer">
+            <div>
+                <a data-role="button"
+                   data-bind="enabled: isSubmitBtnEnabled, visible: isSubmitBtnVisible"
+                   class="submit-btn">SUBMIT</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="exportView"
+        data-role="view"
+        data-title="DCI QUIZ"
+        data-use-native-scrolling="true"
+        data-layout="root"
+        data-model="app.export"
+        data-bind="events: {
+            beforeShow: onBeforeShow,
+            init: onInit,
+            show: onShow,
+            afterShow: onAfterShow,
+            hide: onHide
+        }">
+        <div class="page-header">
+            <div style="float: left">
+                <div class="title-div">EXPORT DATA</div>
+                <div class="logo-div"></div>
+            </div>
+        </div>
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>
+                This page allows you to export data from both local and central databases.
+                Exporting from the central database requires an internet connection.
+            </li>
+        </ul>
+        <div id="downloadLink">
+            <span>Exporting...</span>
+            <a id="openCSVLink" href="" target="_blank">Download CSV</a>
+            <a id="openPDFLink" href="make-pdf.html" target="_blank">Download PDF</a>
+        </div>
+        <div style="position: absolute; bottom: 30px; width: 100%">
+            <a data-role="button"
+               data-bind="enabled: isSubmitBtnEnabled, visible: isSubmitBtnVisible"
+               class="submit-btn">EXPORT LOCAL DB</a>
+        </div>
+        <div data-role="footer" class="btn-footer">
+            <div>
+                <a data-role="button"
+                   data-bind="enabled: isProcessBtnEnabled, visible: isProcessBtnVisible"
+                   class="process-btn">EXPORT CENTRAL DB</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="syncView"
+        data-role="view"
+        data-title="DCI QUIZ"
+        data-use-native-scrolling="true"
+        data-layout="root"
+        data-model="app.sync"
+        data-bind="events: {
+            beforeShow: onBeforeShow,
+            init: onInit,
+            show: onShow,
+            afterShow: onAfterShow,
+            hide: onHide
+        }">
+        <div class="page-header">
+            <div style="float: left">
+                <div class="title-div">SYNC DATA</div>
+                <div class="logo-div"></div>
+            </div>
+        </div>
+        <ul data-role="listview" data-style="inset" data-type="group">
+            <li>
+                This page allows you to upload your local data to the online central database.
+                This operation requires an internet connection.
+            </li>
+        </ul>
+        <div id="syncBlock">
+            <a href="" target="_blank">Syncing...</a>
+        </div>
+        <div data-role="footer" class="btn-footer">
+            <div>
+                <a data-role="button"
+                   data-bind="enabled: isSubmitBtnEnabled, visible: isSubmitBtnVisible"
+                   class="submit-btn">SYNC NOW</a>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .result-text-div {
+            padding: 15px;
+            text-align: center;
+            font-size: 40px;
+            font-family: 'Sans Pro Light';
+        }
+
+        #downloadLink span {
+            font-size: 40px;
+            margin: 50px auto;
+            width: 200px;
+            height: 200px;
+            display: none;
+        }
+        #downloadLink a {
+            margin: 50px auto;
+            width: 200px;
+            height: 200px;
+            background: url('gfx/download.png') no-repeat center;
+            background-size: contain;
+        
+            padding-top: 200px;
+            font-size: 30px;
+            text-align: center;
+            color: #32364c;
+        
+            display: none;
+        }
+
+        #syncBlock {
+            display: none;
+        }
+        #syncBlock a {
+            margin: 50px auto;
+            width: 200px;
+            height: 200px;
+            background: url('gfx/upload.png') no-repeat center;
+            background-size: contain;
+            padding-top: 200px;
+            font-size: 30px;
+            text-align: center;
+            color: #32364c;
+            display: block;
+        }
+    </style>
+
+    <audio id="audioCorrect">
+        <source src="sounds/correct.mp3" type="audio/mpeg" />
+    </audio>
+    <audio id="audioWrong">
+        <source src="sounds/wrong.mp3" type="audio/mpeg" />
+    </audio>
+
+</body>
+</html>
