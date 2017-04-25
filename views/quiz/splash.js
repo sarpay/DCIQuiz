@@ -25,6 +25,7 @@
     },
 
     clickStartBtn: function (e) {
+        playSound('audioStart');
         goToView('welcome', null, false, true, false, 0);
     }
 

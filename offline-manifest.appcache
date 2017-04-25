@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# v2.9
+# v3.2
 
 CACHE:
 index.html
@@ -77,6 +77,9 @@ gfx/splash.png
 
 sounds/correct.mp3
 sounds/wrong.mp3
+sounds/success.mp3
+sounds/start.mp3
+sounds/fail.mp3
 
 fonts/SourceSansPro-Bold.otf
 fonts/SourceSansPro-ExtraLight.otf

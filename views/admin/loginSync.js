@@ -1,16 +1,16 @@
 ﻿app.loginSync = kendo.observable({
 
     fwd: '',
-    user: 'dc1',
-    pwd: 'meta1',
+    user: '',
+    pwd: '',
 
     isSubmitBtnEnabled: true,
     isSubmitBtnVisible: true,
 
     reset: function (e) {
         this.set('fwd', '');
-        this.set('user', 'dc1');
-        this.set('pwd', 'meta1');
+        this.set('user', '');
+        this.set('pwd', '');
     },
 
     onBeforeShow: function (e) {

@@ -3,8 +3,9 @@
     /***************************************/
     /*** data-points ***/
     /***************************************/
-    name: '',
-    company: '',
+    //name: '',
+    //company: '',
+    resultText: '',
     correctsCount: 0,
     wrongsCount: 0,
     skippedCount: 0,
@@ -19,6 +20,7 @@
     reset: function (e) {
         this.set('name', '');
         this.set('company', '');
+        this.set('resultText', '');
         this.set('correctsCount', 0);
         this.set('wrongsCount', 0);
         this.set('skippedCount', 0);
@@ -79,11 +81,15 @@
                         setTimeout(function () {
                             set_gauge(dm.score, dm.correctsCount, dm.wrongsCount, dm.skippedCount);
                             if (dm.passed) {
-                                dm.set('isGoodResultVisible', true);
-                                dm.set('btnText', 'REDEEM REWARD');
-                            } else {
-                                dm.set('isBadResultVisible', true);
+                                playSound('audioSuccess');
+                                //dm.set('isGoodResultVisible', true);
+                                dm.set('resultText', 'Congratulations! You are a winner!<br />Please alert a DCI team member so you can receive your gift.');
                                 dm.set('btnText', 'DONE');
+                            } else {
+                                playSound('audioFail');
+                                dm.set('resultText', 'Thanks for taking the quiz.<br />Please try again.');
+                                //dm.set('isBadResultVisible', true);
+                                dm.set('btnText', 'TRY AGAIN');
                             }
                         }, 500);
                     });
@@ -120,8 +126,13 @@
     },
 
     clickSubmitBtn: function (e) {
+        //stopSound();
         if (this.passed) {
-            goToView('profile', null, false, true, false, 0);
+            resetSession(function () {
+                //goToView('profile', null, false, true, false, 0);
+                goToView('splash', null, false, true, true, 0);
+                msg('Congratulations!', ' You are a winner! Before you close this message, please alert a DCI team member so you can receive your gift.');
+            });
         } else {
             resetSession(function () {
                 goToView('splash', null, false, true, true, 0);

@@ -57,18 +57,23 @@
         dm.set('emailBadgeVisible', false);
         dm.set('companyBadgeVisible', false);
         dm.set('phoneBadgeVisible', false);
+
         var valid = true;
         if (!validateInput('name', dm.name)) {
-            valid = false; dm.set('nameBadgeVisible', true);
+            //valid = false; dm.set('nameBadgeVisible', true);
+            dm.set('name', '-');
         }
         if (!validateInput('email', dm.email)) {
-            valid = false; dm.set('emailBadgeVisible', true);
+            //valid = false; dm.set('emailBadgeVisible', true);
+            dm.set('email', '-');
         }
         if (!validateInput('company', dm.company)) {
-            valid = false; dm.set('companyBadgeVisible', true);
+            //valid = false; dm.set('companyBadgeVisible', true);
+            dm.set('company', '-');
         }
         if (!validateInput('phone', dm.phone)) {
-            valid = false; dm.set('phoneBadgeVisible', true);
+            //valid = false; dm.set('phoneBadgeVisible', true);
+            dm.set('phone', '-');
         }
 
         /*** update database ***/

@@ -1,5 +1,6 @@
 ﻿var PASS_SCORE = 100;
-var CORRECT_ANSWERS = ['a', 'b', 'a', 'a', 'b', 'a', 'a', 'e', 'e', 'a', 'c', 'b', 'd', 'e', 'c'];
+var CORRECT_ANSWERS = ['a', 'b', 'a', 'a', 'b', 'a', 'a', 'a', 'e', 'a', 'c', 'b', 'd', 'd', 'c'];
+var AUDIO;
 
 
 function update_answers(qIX, answer, proceed) {

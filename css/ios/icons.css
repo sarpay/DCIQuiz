@@ -20,6 +20,12 @@
     padding-top: 20px;*/
 }
 
+#splashView .km-hamburger:after,
+#splashView .km-hamburger:before {
+    top: 0;
+    left: 0;
+}
+
 /*.km-header-back-btn {
     padding-left: 9px !important;
 }*/

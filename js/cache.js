@@ -6,6 +6,8 @@ appCache.addEventListener(
     function (e) {
         $.toast().reset('all');
         msg('', 'App is now ready for offline use.');
+        $('#btnStartQuiz').show();
+        $('#btnSplashMenu').show();
     },
     false
 );
@@ -23,6 +25,8 @@ appCache.addEventListener(
 appCache.addEventListener(
     'downloading', 
     function (e) {
+        $('#btnStartQuiz').hide();
+        $('#btnSplashMenu').hide();
         /*http://kamranahmed.info/toast*/
         $.toast({
             heading: 'Please Wait...',
@@ -53,7 +57,8 @@ appCache.addEventListener(
 appCache.addEventListener(
     'noupdate',
     function () {
-
+        $('#btnStartQuiz').show();
+        $('#btnSplashMenu').show();
     },
     false
 );
@@ -83,6 +88,8 @@ appCache.addEventListener(
     function () {
         $.toast().reset('all');
         msg('', 'App is now ready for offline use.');
+        $('#btnStartQuiz').show();
+        $('#btnSplashMenu').show();
     },
     false
 );

@@ -364,13 +364,10 @@ function msg(title, content) {
 
 function answerFeedback(qIX, answer) {
 
-    var audio;
-
     if (CORRECT_ANSWERS[qIX] === answer) {
-        //audio = new Audio('sounds/correct.mp3');
-        audio = document.getElementById('audioCorrect');
+        playSound('audioCorrect');
         $.toast({
-            text: 'Correct :)',
+            text: 'Correct',
             showHideTransition: 'fade',
             icon: 'success',
             position: 'mid-center',
@@ -381,10 +378,9 @@ function answerFeedback(qIX, answer) {
             hideAfter: 1150
         });
     } else {
-        //audio = new Audio('sounds/wrong.mp3');
-        audio = document.getElementById('audioWrong');
+        playSound('audioWrong');
         $.toast({
-            text: 'Wrong :(',
+            text: 'Wrong',
             showHideTransition: 'fade',
             icon: 'error',
             position: 'mid-center',
@@ -396,6 +392,19 @@ function answerFeedback(qIX, answer) {
         });
     }
 
-    audio.play();
+}
+
+
+function playSound(elemId) {
+    
+    AUDIO = document.getElementById(elemId);
+    AUDIO.play();
+
+}
+
+function stopSound() {
+
+    AUDIO.pause();
+    AUDIO.currentTime = 0;
 
 }

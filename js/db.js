@@ -8,7 +8,7 @@ function create_new_user(name, email, company, phone, proceed) {
         "name": name,
         "company": company,
         "phone": phone,
-        "address": '',
+        "address": '-',
         "email": email,
         "answers": [],
         "score": 'n/a',
